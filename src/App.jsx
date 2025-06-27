@@ -1,12 +1,9 @@
-import Time from "./components/Time"
-
-
-
+import { Outlet } from "react-router-dom"
 function App() {
 
   return (
     <>
-     <Time/>
+    <Outlet/>
     </>
   )
 }
