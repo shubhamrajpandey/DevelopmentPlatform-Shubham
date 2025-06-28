@@ -1,27 +1,27 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 export default function SignUp() {
 
   const navigate = useNavigate(false);
-
-  const [form, inputForm] = useState({
+  const {register,handleSubmit, formState:{errors}} = useForm();
+ /*  const [form, inputForm] = useState({
     name: "",
     email: "",
     pass: "",
     conpass: ""
   })
-
-  const handleForm = (e) => {
+ */
+/*   const handleForm = (e) => {
     const { name, value } = e.target;
     inputForm(prevs => ({
       ...prevs, [name]: value
     }))
-  }
+  } */
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert("Account Created");
+  const handle = (e) => {
+    console.log(e);
     navigate("/login")
   };
 
@@ -30,42 +30,46 @@ export default function SignUp() {
       <div className="w-full max-w-sm bg-white p-8 rounded-lg shadow-md">
         <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">Sign Up</h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit
+          (handle)
+        } className="space-y-4">
           <input
             name="name"
             type="text"
             placeholder="Full Name"
-            value={form.name}
-            onChange={handleForm}
+             {...register("name",{required:true})}
             className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
+          {errors.name && <span className="text-shadow-red-700">This Field is Required</span>}
 
           <input
             type="email"
             name="email"
             placeholder="Email"
-            value={form.email}
-            onChange={handleForm}
+             {...register("email",{required:true})}
             className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
+            {errors.email  && <span className="text-shadow-red-700">This Field is Required</span>}
+
 
           <input
             type="password"
             name="pass"
             placeholder="Password"
-            value={form.pass}
-            onChange={handleForm}
+           {...register("password",{required:true})}
             className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
+          {errors.password  && <span className="text-shadow-red-700">This Field is Required</span>}
+
 
           <input
             type="password"
             name="conpass"
             placeholder="Confirm Password"
-            value={form.conpass}
-            onChange={handleForm}
+            {...register("conpass",{required:true})}
             className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
+          {errors.conpass  && <span className="text-shadow-red-700">This Field is Required</span>}
 
           <button
             type="submit"

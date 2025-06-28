@@ -1,15 +1,18 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 export default function Login() {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
-  const [form, setForm] = useState({
+  
+  //This is the React From
+  /* const [form, setForm] = useState({
     email: "",
     password: ""
   });
 
-  const [showPassword, setShowPassword] = useState(false);
 
   const handleForm = (e) => {
     const { name, value } = e.target;
@@ -17,11 +20,13 @@ export default function Login() {
       ...prev,
       [name]: value
     }));
-  };
+  }; */
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert("Logged In");
+  //This is by the React Hook From
+  const{register,handleSubmit,formState:{errors}} = useForm()
+  
+  const handle = (e) => {
+    console.log(e);
     navigate("/home"); 
   };
 
@@ -30,24 +35,29 @@ export default function Login() {
       <div className="w-full max-w-sm bg-white p-8 rounded-lg shadow-md">
         <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">Login</h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit(handle)} className="space-y-4">
           <input
             name="email"
-            value={form.email}
-            onChange={handleForm}
+            /* value={form.email}
+            onChange={handleForm} */
+            {...register("email",{required:true})}
             type="text"
             placeholder="Email"
             className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
+          {errors.email && <span className="text-shadow-red-700">Required</span>}
 
           <input
             name="password"
-            value={form.password}
-            onChange={handleForm}
+            /* value={form.password}
+            onChange={handleForm} */
+            {...register("password",{required:true})}
             type={showPassword ? "text" : "password"}
             placeholder="Password"
             className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
+          {errors.email && <span className="text-shadow-red-700">Required</span>}
+
 
           <div className="flex justify-between items-center text-sm text-gray-600">
             <label className="flex items-center">
