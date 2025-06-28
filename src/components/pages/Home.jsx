@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 
 export default function Time() {
   const defaultTimezones = [
@@ -51,7 +52,10 @@ export default function Time() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-blue-200 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 to-blue-200 flex flex-col">
+      <div className="flex justify-end p-4">
+          <NavLink to={"/login"} className="border-2 text-[14px] text-center  bg-indigo-500 text-white w-20 rounded-lg font-medium hover:bg-blue-600 ">Log Out</NavLink>
+      </div>
       <main className="flex-grow flex justify-center items-center px-4">
         <div className="flex flex-col gap-4 p-6 bg-white border border-amber-200 rounded-3xl shadow-xl w-full max-w-md">
           <h2 className="text-center text-4xl font-extrabold text-gray-800">World Clock</h2>
@@ -78,13 +82,13 @@ export default function Time() {
             />
             <button
               onClick={handleCustomZone}
-              className="px-4 py-2 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600"
+              className="px-4 py-2  bg-indigo-500 text-white rounded-lg font-medium hover:bg-blue-600"
             >
               Show
             </button>
           </div>
 
-          <p className="text-center text-5xl font-semibold text-blue-600 tracking-wide">
+          <p className="text-center text-5xl font-semibold  text-indigo-500 tracking-wide">
             {time}
           </p>
           <p className="text-center text-base text-gray-600">

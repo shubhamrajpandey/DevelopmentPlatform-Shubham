@@ -1,7 +1,10 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export default function SignUp() {
+
+  const navigate = useNavigate(false);
+
   const [form, inputForm] = useState({
     name: "",
     email: "",
@@ -19,6 +22,7 @@ export default function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault();
     alert("Account Created");
+    navigate("/login")
   };
 
   return (

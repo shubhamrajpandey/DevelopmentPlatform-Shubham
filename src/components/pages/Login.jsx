@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({
     email: "",
     password: ""
@@ -11,7 +13,7 @@ export default function Login() {
 
   const handleForm = (e) => {
     const { name, value } = e.target;
-    setForm(prev => ({
+    setForm((prev) => ({
       ...prev,
       [name]: value
     }));
@@ -20,6 +22,7 @@ export default function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     alert("Logged In");
+    navigate("/home"); 
   };
 
   return (
@@ -51,11 +54,11 @@ export default function Login() {
               <input
                 type="checkbox"
                 className="mr-2"
-                onChange={() => setShowPassword(prev => !prev)}
+                onChange={() => setShowPassword((prev) => !prev)}
               />
               Show Password
             </label>
-            <NavLink href="#" className="text-purple-600 hover:underline" to= "/forget">
+            <NavLink to="/forget" className="text-purple-600 hover:underline">
               Forgot Password?
             </NavLink>
           </div>
@@ -63,7 +66,6 @@ export default function Login() {
           <button
             type="submit"
             className="w-full py-3 bg-indigo-500 text-white font-semibold rounded-md hover:bg-indigo-600 transition-colors"
-            to
           >
             LOGIN
           </button>
@@ -71,7 +73,7 @@ export default function Login() {
           <p className="text-center text-sm text-gray-600">
             Don’t have an account?{" "}
             <NavLink
-              to="/Signup"
+              to="/signup"
               className="text-purple-600 hover:underline cursor-pointer"
             >
               Sign up
