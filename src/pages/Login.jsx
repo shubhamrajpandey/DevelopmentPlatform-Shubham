@@ -1,33 +1,24 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 export default function Login() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
-  
-  //This is the React From
-  /* const [form, setForm] = useState({
-    email: "",
-    password: ""
-  });
+
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
 
-  const handleForm = (e) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({
-      ...prev,
-      [name]: value
-    }));
-  }; */
-
-  //This is by the React Hook From
-  const{register,handleSubmit,formState:{errors}} = useForm()
-  
-  const handle = (e) => {
-    console.log(e);
-    navigate("/home"); 
+  const handle = async (data) => {
+    try {
+      const response = await axios.post(`api/auth/login`, data);   
+      localStorage.setItem("token", response.data.data.token);
+      navigate("/home");
+    } catch (error) {
+      console.error('Login error:', error);
+    }
   };
 
   return (
@@ -36,28 +27,23 @@ export default function Login() {
         <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">Login</h2>
 
         <form onSubmit={handleSubmit(handle)} className="space-y-4">
+          {errors.email && <span className="text-red-700">This field is Required</span>}
           <input
             name="email"
-            /* value={form.email}
-            onChange={handleForm} */
-            {...register("email",{required:true})}
+            {...register("email", { required: true })}
             type="text"
             placeholder="Email"
-            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className={`w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 ${errors.email && "border-red-500 focus:ring-red-400 text-red-800"}`}
           />
-          {errors.email && <span className="text-shadow-red-700">Required</span>}
 
+          {errors.password && <span className="text-red-700">This field is Required</span>}
           <input
             name="password"
-            /* value={form.password}
-            onChange={handleForm} */
-            {...register("password",{required:true})}
+            {...register("password", { required: true })}
             type={showPassword ? "text" : "password"}
             placeholder="Password"
-            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className={`w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 ${errors.password && "border-red-500 focus:ring-red-400 text-red-800"}`}
           />
-          {errors.email && <span className="text-shadow-red-700">Required</span>}
-
 
           <div className="flex justify-between items-center text-sm text-gray-600">
             <label className="flex items-center">
